@@ -29,4 +29,17 @@ public class KeepsController : ControllerBase
     }
   }
 
+  [HttpGet]
+  public async Task<ActionResult <List<Keep>>> GetAllKeeps(){
+    try 
+    {
+    List<Keep> keep = _keepsService.GetAllKeeps();
+    return keep;
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
 }
