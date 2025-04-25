@@ -34,12 +34,25 @@ public class VaultsService
     {
       throw new Exception("You are forbidden. Thats not your vault. How dare you!");
     }
-    
+
     foundVault.Name = vaultData.Name ?? foundVault.Name;
     foundVault.IsPrivate = vaultData.IsPrivate ?? foundVault.IsPrivate;
 
 
     Vault vault = _repository.EditVault(foundVault);
     return vault;
+  }
+
+  internal string DeleteVault(int vaultId, Account userInfo)
+  {
+    Vault foundVault = GetVaultById(vaultId);
+    if (foundVault.CreatorId != userInfo.Id)
+    {
+      throw new Exception("Not your Vault that you own, so you cant delete it. Good try I guess");
+    }
+
+    _repository.DeleteVault(vaultId);
+
+    return "Vault was deleted!";
   }
 }

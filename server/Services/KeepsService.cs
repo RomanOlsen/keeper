@@ -50,14 +50,14 @@ public class KeepsService
 
   internal string DeleteKeep(int keepId, Account userInfo)
   {
-    Keep foundKeep = _repository.GetKeepById(keepId);
+    Keep foundKeep = GetKeepById(keepId);
     if (foundKeep.CreatorId != userInfo.Id)
     {
       throw new Exception("Not your Keep that you own, so you cant delete it");
     }
 
     _repository.DeleteKeep(keepId);
-    
+
     return "Keep was deleted!";
 
 

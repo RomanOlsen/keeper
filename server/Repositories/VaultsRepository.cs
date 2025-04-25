@@ -1,6 +1,7 @@
 
 
 
+
 namespace keeper.Repositories;
 
 public class VaultsRepository
@@ -68,5 +69,17 @@ WHERE vaults.id = @Id
 
     Vault vault = _db.Query(sql, (Vault vault, Account account) => { vault.Creator = account; return vault; }, foundVault).SingleOrDefault();
     return vault;
+  }
+
+  internal void DeleteVault(int vaultId)
+  {
+    string sql = @"
+DELETE FROM vaults WHERE id = @vaultId LIMIT 1
+;";
+    int rowsGotten = _db.Execute(sql, new { vaultId });
+    if (rowsGotten != 1)
+    {
+      throw new Exception("Error. There were either no rows affected or multiple");
+    }
   }
 }
