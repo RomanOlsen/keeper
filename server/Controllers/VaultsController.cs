@@ -75,4 +75,24 @@ public class VaultsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  // get VKs in a public vault
+
+  [HttpGet("{vaultId}/keeps")]
+  public ActionResult<List<VaultKeep>> GetKeepsInPublicVault(int vaultId)
+  {
+    try
+    {
+      // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // this could be null, but thats okay. they dont have to be logged in to check but we need their userInfo to check and see if they can view the private Vault
+      VaultKeep VKs = _vaultsService.GetKeepsInPublicVault(vaultId);
+      return Ok(VKs);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
+  // [Authorize]
+  // [HttpGet("{vaultId}/keeps")]
 }

@@ -5,6 +5,8 @@ namespace keeper.Services;
 public class VaultsService
 {
   private readonly VaultsRepository _repository;
+  private readonly VaultKeepsService _vaultKeepsService;
+
 
   public VaultsService(VaultsRepository repository)
   {
@@ -54,5 +56,16 @@ public class VaultsService
     _repository.DeleteVault(vaultId);
 
     return "Vault was deleted!";
+  }
+
+  internal VaultKeep GetKeepsInPublicVault(int vaultId)
+  {
+    Vault foundVault = GetVaultById(vaultId);
+    if (foundVault.IsPrivate is true)
+    {
+      
+    }
+    VaultKeep VKs = _vaultKeepsService.GetKeepsInPublicVault()
+    return VKs;
   }
 }

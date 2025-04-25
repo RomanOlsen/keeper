@@ -30,7 +30,7 @@ public class KeepsController : ControllerBase
   }
 
   [HttpGet]
-  public async Task<ActionResult<List<Keep>>> GetAllKeeps() // does not need async task
+  public ActionResult<List<Keep>> GetAllKeeps() // does not need async task
   {
     try
     {
@@ -87,5 +87,5 @@ public class KeepsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
-  
+
 }
