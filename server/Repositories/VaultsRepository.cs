@@ -83,7 +83,7 @@ DELETE FROM vaults WHERE id = @vaultId LIMIT 1
     }
   }
 
-  internal List<VaultKeep> GetKeepsInPrivateVault(int vaultId)
+  internal List<KeepsInVault> GetKeepsInPrivateVault(int vaultId)
   {
     string sql = @"
     SELECT vault_keeps.*, keeps.*, accounts.* FROM vault_keeps
@@ -92,15 +92,16 @@ DELETE FROM vaults WHERE id = @vaultId LIMIT 1
     WHERE vault_keeps.vault_id = @vaultId;
     ;";
 
-    List<VaultKeep> vaultKeeps = _db.Query(sql, (VaultKeep VK, Keep keep, Account account) =>
+    List<KeepsInVault> vaultKeeps = _db.Query(sql, (VaultKeep vk, KeepsInVault keep, Account account) =>
     {
+      keep.VaultKeepId = vk.Id;
       keep.Creator = account;
-      return VK;
+      return keep;
     }, new { vaultId }).ToList();
     return vaultKeeps;
   }
 
-  internal List<VaultKeep> GetKeepsInPublicVault(int vaultId)
+  internal List<KeepsInVault> GetKeepsInPublicVault(int vaultId)
   {
     throw new NotImplementedException();
   }

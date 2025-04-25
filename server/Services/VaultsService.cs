@@ -58,14 +58,14 @@ public class VaultsService
     return "Vault was deleted!";
   }
 
-  internal List<VaultKeep> GetKeepsInVault(int vaultId, Account userInfo)
+  internal List<KeepsInVault> GetKeepsInVault(int vaultId, Account userInfo)
   {
     Vault foundVault = GetVaultById(vaultId);
     if (foundVault.IsPrivate is true)
     {
       if (foundVault.CreatorId == userInfo.Id || userInfo.Id != null) // null check prob not needed but cant hurt
       {
-        List<VaultKeep> VKs = _repository.GetKeepsInPrivateVault(vaultId);
+        List<KeepsInVault> VKs = _repository.GetKeepsInPrivateVault(vaultId);
         return VKs;
       }
       else
@@ -73,7 +73,7 @@ public class VaultsService
         throw new Exception("Error! This vault is private, and you do not own it. So you cant access.");
       }
     }
-    List<VaultKeep> keeps = _repository.GetKeepsInPublicVault(vaultId);
+    List<KeepsInVault> keeps = _repository.GetKeepsInPublicVault(vaultId);
     return keeps;
   }
 }

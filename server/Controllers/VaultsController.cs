@@ -79,12 +79,12 @@ public class VaultsController : ControllerBase
   
 
   [HttpGet("{vaultId}/keeps")]
-  public async Task<ActionResult<List<VaultKeep>>> GetKeepsInVault(int vaultId)
+  public async Task<ActionResult<List<KeepsInVault>>> GetKeepsInVault(int vaultId)
   {
     try
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // this could be null, but thats okay. they dont have to be logged in to check but we need their userInfo to check and see if they can view the private Vault
-      List<VaultKeep> VKs = _vaultsService.GetKeepsInVault(vaultId, userInfo);
+      List<KeepsInVault> VKs = _vaultsService.GetKeepsInVault(vaultId, userInfo);
       return Ok(VKs);
     }
     catch (Exception exception)

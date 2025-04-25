@@ -11,3 +11,8 @@ public class Keep : DatabaseDefault
   public int Kept { get; set; } // TODO figure out Kept (should be an int) amount of vaults its saved in. look at UML too.
 
 }
+
+public class KeepsInVault : Keep
+{
+  public int VaultKeepId { get; set; }
+}
