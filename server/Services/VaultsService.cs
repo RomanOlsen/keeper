@@ -1,16 +1,16 @@
-
-
 namespace keeper.Services;
 
 public class VaultsService
 {
   private readonly VaultsRepository _repository;
   private readonly VaultKeepsService _vaultKeepsService;
+  private readonly Auth0Provider _auth0Provider;
 
-
-  public VaultsService(VaultsRepository repository)
+  public VaultsService(VaultsRepository repository, VaultKeepsService vaultKeepsService, Auth0Provider auth0Provider)
   {
     _repository = repository;
+    _vaultKeepsService = vaultKeepsService;
+    _auth0Provider = auth0Provider;
   }
 
   internal Vault CreateVault(Vault vaultData)
@@ -58,14 +58,20 @@ public class VaultsService
     return "Vault was deleted!";
   }
 
-  internal VaultKeep GetKeepsInPublicVault(int vaultId)
+  internal async VaultKeep GetKeepsInVault(int vaultId, Account userInfo)
   {
     Vault foundVault = GetVaultById(vaultId);
     if (foundVault.IsPrivate is true)
     {
-      
+      if (foundVault.CreatorId == userInfo.Id)
+      {
+        VaultKeep VKs = _vaultKeepsService.GetKeepsInPrivateVault();
+  
+      }
+      // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // not needed anymore
+      return VKsl
     }
-    VaultKeep VKs = _vaultKeepsService.GetKeepsInPublicVault()
+    VaultKeep VKs = _vaultKeepsService.GetKeepsInPublicVault();
     return VKs;
   }
 }
