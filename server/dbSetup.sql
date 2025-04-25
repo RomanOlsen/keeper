@@ -49,3 +49,8 @@ CREATE TABLE vault_keeps(
 );
 
 DROP TABLE vault_keeps
+
+    SELECT vault_keeps.*, keeps.*, accounts.* FROM vault_keeps
+    INNER JOIN keeps ON keeps.id = vault_keeps.keep_id
+    INNER JOIN accounts ON accounts.id = vault_keeps.creator_id
+    WHERE vault_keeps.vault_id = @vaultId;
