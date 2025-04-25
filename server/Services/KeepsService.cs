@@ -8,9 +8,9 @@ public class KeepsService
     _repository = repository;
   }
 
-  internal Keep CreateKeep(Keep keepData, Account userInfo)
+  internal Keep CreateKeep(Keep keepData, Account userInfo) // LATER ON add a check to see if the creator id matches the person logged in
   {
-    Keep keep = _repository.CreateKeep(keepData, userInfo);
+    Keep keep = _repository.CreateKeep(keepData);
     return keep;
   }
 }
