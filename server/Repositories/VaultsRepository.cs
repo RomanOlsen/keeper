@@ -1,5 +1,6 @@
 
 
+
 namespace keeper.Repositories;
 
 public class VaultsRepository
@@ -32,6 +33,7 @@ WHERE vaults.id = LAST_INSERT_ID()
     return vault;
   }
 
+
   internal Vault GetVaultById(int vaultId)
   {
     string sql = @"SELECT vaults.*, accounts.* FROM vaults
@@ -44,6 +46,27 @@ WHERE vaults.id = LAST_INSERT_ID()
       vault.Creator = account;
       return vault;
     }, new { vaultId }).SingleOrDefault();
+    return vault;
+  }
+  internal Vault EditVault(Vault foundVault) // only update name and IsPrivate?
+  {
+    string sql = @"
+UPDATE vaults
+SET
+name = @Name,
+is_private = @IsPrivate,
+description = @Description,
+img = @Img
+WHERE id = @Id LIMIT 1;
+
+SELECT vaults.*, accounts.* FROM vaults
+INNER JOIN accounts ON accounts.id = vaults.creator_id
+WHERE vaults.id = @Id
+
+
+;";
+
+    Vault vault = _db.Query(sql, (Vault vault, Account account) => { vault.Creator = account; return vault; }, foundVault).SingleOrDefault();
     return vault;
   }
 }

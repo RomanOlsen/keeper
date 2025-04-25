@@ -44,19 +44,21 @@ public class VaultsController : ControllerBase
     }
   }
 
-  // [Authorize]
-  // [HttpPut("{vaultId}")]
-  // public async Task<ActionResult<Vault>> EditVault([FromBody] Vault vaultData, int vaultId){
-  //   try 
-  //   {
-  //           Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
-  //           Vault vault = _vaultsService.EditVault()
-  //   }
-  //   catch (Exception exception)
-  //   {
-  //     return BadRequest(exception.Message);
-  //   }
-  // }
+  [Authorize]
+  [HttpPut("{vaultId}")]
+  public async Task<ActionResult<Vault>> EditVault([FromBody] Vault vaultData, int vaultId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Vault vault = _vaultsService.EditVault(vaultData, userInfo, vaultId);
+      return Ok(vault);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 
   //   [Authorize] // CHANGE TO VAULTS
   // [HttpDelete("{keepId}")]

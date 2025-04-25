@@ -33,7 +33,7 @@ public class KeepsService
   }
   internal Keep EditKeep(Keep keepData, Account userInfo, int keepId)
   {
-    Keep foundKeep = _repository.GetKeepById(keepId);
+    Keep foundKeep = GetKeepById(keepId);
 
     if (foundKeep.CreatorId != userInfo.Id)
     {
