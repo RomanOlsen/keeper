@@ -58,20 +58,22 @@ public class VaultsService
     return "Vault was deleted!";
   }
 
-  internal async VaultKeep GetKeepsInVault(int vaultId, Account userInfo)
+  internal VaultKeep GetVaultKeepsInVault(int vaultId, Account userInfo)
   {
     Vault foundVault = GetVaultById(vaultId);
     if (foundVault.IsPrivate is true)
     {
-      if (foundVault.CreatorId == userInfo.Id)
+      if (foundVault.CreatorId == userInfo.Id || userInfo.Id != null) // null check prob not needed but cant hurt
       {
-        VaultKeep VKs = _vaultKeepsService.GetKeepsInPrivateVault();
-  
+        VaultKeep VKs = _repository.GetVaultKeepsInPrivateVault(vaultId);
+        return VKs;
       }
-      // Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // not needed anymore
-      return VKsl
+      else
+      {
+        throw new Exception("Error! This vault is private, and you do not own it. So you cant access.");
+      }
     }
-    VaultKeep VKs = _vaultKeepsService.GetKeepsInPublicVault();
-    return VKs;
+    VaultKeep keeps = _vaultKeepsService.GetVaultKeepsInPublicVault(vaultId);
+    return keeps;
   }
 }

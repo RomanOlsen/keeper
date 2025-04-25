@@ -82,4 +82,16 @@ DELETE FROM vaults WHERE id = @vaultId LIMIT 1
       throw new Exception("Error. There were either no rows affected or multiple");
     }
   }
+
+  internal VaultKeep GetKeepsInPrivateVault(int vaultId)
+  {
+    string sql = @"
+    SELECT vault_keeps.*, accounts.* FROM vault_keeps
+    INNER JOIN accounts ON accounts.id = vault_keeps.creator_id
+    WHERE vault_keeps.vault_id = @vaultId
+    ;";
+
+    VaultKeep vaultKeeps = _db.Query(sql, (VaultKeep vk, Account account)=> {vk.})
+  }
 }
+
