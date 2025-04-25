@@ -1,4 +1,6 @@
 
+
+
 namespace keeper.Services;
 
 public class KeepsService
@@ -14,10 +16,37 @@ public class KeepsService
     Keep keep = _repository.CreateKeep(keepData);
     return keep;
   }
-
   internal List<Keep> GetAllKeeps()
   {
     List<Keep> keeps = _repository.GetAllKeeps();
     return keeps;
+  }
+
+  internal Keep GetKeepById(int keepId)
+  {
+    Keep keep = _repository.GetKeepById(keepId);
+    if (keep is null)
+    {
+      throw new Exception("Couldn't find a Keep with that id, sorry bud!");
+    }
+    return keep;
+  }
+  internal Keep EditKeep(Keep keepData, Account userInfo, int keepId)
+  {
+    Keep foundKeep = _repository.GetKeepById(keepId);
+
+    if (foundKeep.CreatorId != userInfo.Id)
+    {
+      throw new Exception("Not your Keep that you own");
+    }
+
+    foundKeep.Name = keepData.Name ?? foundKeep.Name;
+    foundKeep.Description = keepData.Description ?? foundKeep.Description;
+    foundKeep.Img = keepData.Img ?? foundKeep.Img;
+
+
+
+    Keep keep = _repository.EditKeep(foundKeep);
+    return keep;
   }
 }

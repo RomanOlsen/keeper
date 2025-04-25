@@ -1,5 +1,7 @@
 
 
+
+
 namespace keeper.Repositories;
 
 public class KeepsRepository
@@ -32,7 +34,6 @@ WHERE keeps.id = LAST_INSERT_ID()
     }, keepData).SingleOrDefault();
     return keep;
   }
-
   internal List<Keep> GetAllKeeps()
   {
     string sql = @"
@@ -48,4 +49,39 @@ WHERE keeps.id = LAST_INSERT_ID()
 
     return keeps;
   }
+
+  internal Keep GetKeepById(int keepId)
+  {
+    string sql = @"SELECT keeps.*, accounts.* FROM keeps
+        INNER JOIN accounts ON accounts.id = keeps.creator_id
+        WHERE keeps.id = @keepId
+
+    ;";
+    Keep keep = _db.Query(sql, (Keep keep, Account account) =>
+    {
+      keep.Creator = account;
+      return keep;
+    }, new { keepId }).SingleOrDefault();
+    return keep;
+  }
+  internal Keep EditKeep(Keep foundKeep) // UPDATE
+  {
+    string sql = @"
+UPDATE keeps
+SET
+name = @Name,
+description = @Description,
+img = @Img
+WHERE id = @Id LIMIT 1;
+
+SELECT keeps.*, accounts.* FROM keeps
+INNER JOIN accounts ON accounts.id = keeps.creator_id
+WHERE keeps.id = @Id
+
+;";
+    Keep keep = _db.Query(sql, (Keep keep, Account account) => { keep.Creator = account; return keep; }, foundKeep).SingleOrDefault();
+    return keep;
+  }
+
+
 }
