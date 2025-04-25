@@ -30,16 +30,47 @@ public class VaultsController : ControllerBase
     }
   }
 
-  [Authorize]
-  [HttpPut("{vaultId}")]
-  public async Task<ActionResult<Vault>> GetVaultById([FromBody] Vault vaultData, int vaultId){
-    try 
+  [HttpGet("{vaultId}")]
+  public ActionResult<Vault> GetVaultById(int vaultId)
+  {
+    try
     {
-    
+      Vault vault = _vaultsService.GetVaultById(vaultId);
+      return Ok(vault);
     }
     catch (Exception exception)
     {
       return BadRequest(exception.Message);
     }
   }
+
+  // [Authorize]
+  // [HttpPut("{vaultId}")]
+  // public async Task<ActionResult<Vault>> EditVault([FromBody] Vault vaultData, int vaultId){
+  //   try 
+  //   {
+  //           Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+  //           Vault vault = _vaultsService.EditVault()
+  //   }
+  //   catch (Exception exception)
+  //   {
+  //     return BadRequest(exception.Message);
+  //   }
+  // }
+
+  //   [Authorize] // CHANGE TO VAULTS
+  // [HttpDelete("{keepId}")]
+  // public async Task<ActionResult<string>> DeleteKeep(int keepId)
+  // {
+  //   try
+  //   {
+  //     Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+  //     string message = _keepsService.DeleteKeep(keepId, userInfo);
+  //     return Ok(message);
+  //   }
+  //   catch (Exception exception)
+  //   {
+  //     return BadRequest(exception.Message);
+  //   }
+  // }
 }
