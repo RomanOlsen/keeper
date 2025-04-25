@@ -2,6 +2,7 @@
 
 
 
+
 namespace keeper.Repositories;
 
 public class KeepsRepository
@@ -83,5 +84,15 @@ WHERE keeps.id = @Id
     return keep;
   }
 
-
+  internal void DeleteKeep(int keepId)
+  {
+    string sql = @"
+DELETE FROM keeps WHERE id = @keepId LIMIT 1
+;";
+    int rowsGotten = _db.Execute(sql, new { keepId });
+    if (rowsGotten != 1)
+    {
+      throw new Exception("Error. There were either no rows affected or multiple");
+    }
+  }
 }

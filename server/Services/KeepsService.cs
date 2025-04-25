@@ -44,9 +44,22 @@ public class KeepsService
     foundKeep.Description = keepData.Description ?? foundKeep.Description;
     foundKeep.Img = keepData.Img ?? foundKeep.Img;
 
-
-
     Keep keep = _repository.EditKeep(foundKeep);
     return keep;
+  }
+
+  internal string DeleteKeep(int keepId, Account userInfo)
+  {
+    Keep foundKeep = _repository.GetKeepById(keepId);
+    if (foundKeep.CreatorId != userInfo.Id)
+    {
+      throw new Exception("Not your Keep that you own, so you cant delete it");
+    }
+
+    _repository.DeleteKeep(keepId);
+    
+    return "Keep was deleted!";
+
+
   }
 }
