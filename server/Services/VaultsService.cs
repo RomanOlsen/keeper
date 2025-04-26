@@ -20,18 +20,34 @@ public class VaultsService
   }
 
 
-  internal Vault GetVaultById(int vaultId)
+  internal Vault GetVaultById(int vaultId, Account userInfo)
   {
     Vault vault = _repository.GetVaultById(vaultId);
     if (vault is null)
     {
       throw new Exception("Couldn't find a Vault with that id, sorry bud!");
     }
+    if (userInfo is null)
+    {
+      if (vault.IsPrivate is true)
+      {
+        throw new Exception("forbidden. log in buddy");
+      }
+      return vault;
+    }
+    if (userInfo.Id != vault.CreatorId && vault.IsPrivate is true)
+    {
+      throw new Exception("forbidden. not your vault and this ones private");
+    }
+    // if (userInfo.Id != null && userInfo.Id != vault.CreatorId && vault.IsPrivate is true)
+    // {
+    //   throw new Exception("you are forbidden to view another persons vault that they have privated");
+    // }
     return vault;
   }
   internal Vault EditVault(Vault vaultData, Account userInfo, int vaultId)
   {
-    Vault foundVault = GetVaultById(vaultId);
+    Vault foundVault = GetVaultById(vaultId, userInfo);
     if (foundVault.CreatorId != userInfo.Id)
     {
       throw new Exception("You are forbidden. Thats not your vault. How dare you!");
@@ -47,7 +63,7 @@ public class VaultsService
 
   internal string DeleteVault(int vaultId, Account userInfo)
   {
-    Vault foundVault = GetVaultById(vaultId);
+    Vault foundVault = GetVaultById(vaultId, userInfo);
     if (foundVault.CreatorId != userInfo.Id)
     {
       throw new Exception("Not your Vault that you own, so you cant delete it. Good try I guess");
@@ -60,7 +76,7 @@ public class VaultsService
 
   internal List<KeepsInVault> GetKeepsInVault(int vaultId, Account userInfo)
   {
-    Vault foundVault = GetVaultById(vaultId);
+    Vault foundVault = GetVaultById(vaultId, userInfo);
     if (foundVault.IsPrivate is true)
     {
       if (foundVault.CreatorId == userInfo.Id || userInfo.Id != null) // null check prob not needed but cant hurt

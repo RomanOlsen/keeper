@@ -31,11 +31,12 @@ public class VaultsController : ControllerBase
   }
 
   [HttpGet("{vaultId}")]
-  public ActionResult<Vault> GetVaultById(int vaultId)
+  public async Task<ActionResult<Vault>> GetVaultById(int vaultId)
   {
     try
     {
-      Vault vault = _vaultsService.GetVaultById(vaultId);
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // will be null if not signed in, which is fine!
+      Vault vault = _vaultsService.GetVaultById(vaultId, userInfo);
       return Ok(vault);
     }
     catch (Exception exception)
