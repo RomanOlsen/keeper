@@ -95,4 +95,22 @@ DELETE FROM keeps WHERE id = @keepId LIMIT 1
       throw new Exception("Error. There were either no rows affected or multiple");
     }
   }
+
+  internal List<Keep> GetAUsersKeeps(string profileId)
+  {
+    string sql = @"
+    SELECT keeps.*, accounts.* FROM keeps 
+    INNER JOIN accounts ON accounts.id = keeps.creator_id
+    WHERE keeps.creator_id = @profileId
+    
+    ;";
+
+    List<Keep> keeps = _db.Query(sql, (Keep keep, Account account) =>
+    {
+      keep.Creator = account;
+      return keep;
+    }, new { profileId }).ToList();
+    return keeps;
+  }
+
 }

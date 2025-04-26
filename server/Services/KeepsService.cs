@@ -63,8 +63,9 @@ public class KeepsService
 
   }
 
-  internal Keep GetAUsersKeeps(string profileId)
+  internal List<Keep> GetAUsersKeeps(string profileId)
   {
-    throw new NotImplementedException();
+    List<Keep> keep = _repository.GetAUsersKeeps(profileId);
+    return keep;
   }
 }

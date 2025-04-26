@@ -76,4 +76,10 @@ public class VaultsService
     List<KeepsInVault> keepsInPublicVault = _vaultKeepsService.GetKeepsInVault(vaultId);
     return keepsInPublicVault;
   }
+
+  internal List<Vault> GetAUsersVaults(string profileId)
+  {
+    List<Vault> vaults = _repository.GetAUsersVaults(profileId);
+    return vaults;
+  }
 }

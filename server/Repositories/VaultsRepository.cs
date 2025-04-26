@@ -2,6 +2,7 @@
 
 
 
+
 namespace keeper.Repositories;
 
 public class VaultsRepository
@@ -81,6 +82,18 @@ DELETE FROM vaults WHERE id = @vaultId LIMIT 1
     {
       throw new Exception("Error. There were either no rows affected or multiple");
     }
+  }
+
+  internal List<Vault> GetAUsersVaults(string profileId)
+  {
+    string sql = @"
+    SELECT vaults.*, accounts.* FROM vaults
+    INNER JOIN accounts ON accounts.id = vaults.creator_id
+    WHERE vaults.creator_id = @profileId
+
+    ;";
+    List<Vault> vaults = _db.Query(sql, (Vault vault, Account account) => { vault.Creator = account; return vault; }, new { profileId }).ToList();
+    return vaults;
   }
 
   // internal List<KeepsInVault> GetKeepsInPrivateVault(int vaultId)
