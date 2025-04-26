@@ -1,6 +1,7 @@
 
 
 
+
 namespace keeper.Services;
 
 public class VaultKeepsService
@@ -30,9 +31,15 @@ public class VaultKeepsService
     return "VK was deleted!";
   }
 
-  internal VaultKeep GetKeepsInPublicVault()
+  // internal VaultKeep GetKeepsInPublicVault()
+  // {
+  //   throw new NotImplementedException();
+  // }
+
+  internal List<KeepsInVault> GetKeepsInVault(int vaultId)
   {
-    throw new NotImplementedException();
+    List<KeepsInVault> keepsInVault = _repository.GetKeepsInVault(vaultId);
+    return keepsInVault;
   }
 
   private VaultKeep GetVaultKeepById(int vaultKeepId)

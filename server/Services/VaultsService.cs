@@ -65,15 +65,15 @@ public class VaultsService
     {
       if (foundVault.CreatorId == userInfo.Id || userInfo.Id != null) // null check prob not needed but cant hurt
       {
-        List<KeepsInVault> VKs = _repository.GetKeepsInPrivateVault(vaultId);
-        return VKs;
+        List<KeepsInVault> keepsInVault = _vaultKeepsService.GetKeepsInVault(vaultId);
+        return keepsInVault;
       }
       else
       {
         throw new Exception("Error! This vault is private, and you do not own it. So you cant access.");
       }
     }
-    List<KeepsInVault> keeps = _repository.GetKeepsInPublicVault(vaultId);
-    return keeps;
+    List<KeepsInVault> keepsInPublicVault = _vaultKeepsService.GetKeepsInVault(vaultId);
+    return keepsInPublicVault;
   }
 }
