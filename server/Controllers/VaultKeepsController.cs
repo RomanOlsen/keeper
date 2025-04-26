@@ -6,6 +6,7 @@ public class VaultKeepsController : ControllerBase
 {
   private readonly VaultKeepsService _vaultKeepsService;
   private readonly Auth0Provider _auth0Provider;
+
   private readonly VaultsService _vaultsService;
 
   public VaultKeepsController(VaultKeepsService vaultKeepsService, Auth0Provider auth0Provider, VaultsService vaultsService)
@@ -23,8 +24,8 @@ public class VaultKeepsController : ControllerBase
     {
       Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
       vaultKeepData.CreatorId = userInfo.Id;
-      _vaultsService.GetVaultById(vaultKeepData.VaultId, userInfo);
-      VaultKeep vaultKeep = _vaultKeepsService.CreateVaultKeep(vaultKeepData, userInfo);
+      Vault foundVault = _vaultsService.GetVaultById(vaultKeepData.VaultId, userInfo); // ANCHOR this is the only thing i dont feel very proud of in my code. I just had to figure out a way to get around the circular dependency error. But all I would have done is moved this line to the service.
+      VaultKeep vaultKeep = _vaultKeepsService.CreateVaultKeep(vaultKeepData, userInfo, foundVault);
       return Ok(vaultKeep);
     }
     catch (Exception exception)

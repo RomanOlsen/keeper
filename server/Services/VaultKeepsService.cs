@@ -15,14 +15,14 @@ public class VaultKeepsService
   }
 
 
-  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, Account userInfo)
+  internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, Account userInfo, Vault foundVault)
   {
-    
+
     VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
-    // if (vaultKeep.CreatorId != userInfo.Id)
-    // {
-    //   throw new Exception("No. You cant make a vaultKeep on someone elses vault!");
-    // }
+    if (foundVault.CreatorId != userInfo.Id)
+    {
+      throw new Exception("No. You cant make a vaultKeep on someone elses vault!");
+    }
     return vaultKeep;
   }
 
