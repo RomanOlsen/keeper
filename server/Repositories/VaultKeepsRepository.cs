@@ -21,6 +21,7 @@ public class VaultKeepsRepository
     VALUES (@KeepId, @VaultId, @CreatorId);
     
     SELECT * FROM vault_keeps
+  
 WHERE vault_keeps.id = LAST_INSERT_ID()
 
     ;";

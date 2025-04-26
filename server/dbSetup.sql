@@ -56,3 +56,11 @@ DROP TABLE accounts;
     INNER JOIN keeps ON keeps.id = vault_keeps.keep_id
     INNER JOIN accounts ON accounts.id = vault_keeps.creator_id
     WHERE vault_keeps.vault_id = @vaultId;
+
+-- unsure how to count them
+SELECT * ,
+COUNT (keeps.id) AS kept 
+FROM vault_keeps
+LEFT OUTER JOIN keeps ON keeps.id = vault_keeps.keep_id
+GROUP BY vault_keeps.id;
+WHERE vault_keeps.id = LAST_INSERT_ID();

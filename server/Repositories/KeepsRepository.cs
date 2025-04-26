@@ -127,4 +127,16 @@ DELETE FROM keeps WHERE id = @keepId LIMIT 1
     Keep keep = _db.Query(sql, (Keep keep, Account account) => { keep.Creator = account; return keep; }, new { keepId }).SingleOrDefault();
     return keep;
   }
+
+  // internal void UpdateKeptCount(int keepId)
+  // {
+  //   string sql = @"
+  //   UPDATE keeps
+  //   SET kept = kept + 1
+  //   WHERE id = @keepId
+  //   LIMIT 1
+  //   ;";
+
+  //   _db.Query(sql, new { keepId });
+  // }
 }

@@ -73,4 +73,10 @@ public class KeepsService
   {
     return _repository.UpdateViewCount(keepId);
   }
+
+  // internal void UpdateKeptCount(int keepId)
+  // {
+  //   _repository.UpdateKeptCount(keepId);
+
+  // }
 }
