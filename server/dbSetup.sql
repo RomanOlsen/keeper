@@ -4,7 +4,9 @@ CREATE TABLE IF NOT EXISTS accounts(
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name VARCHAR(255) COMMENT 'User Name',
   email VARCHAR(255) UNIQUE COMMENT 'User Email',
-  picture VARCHAR(255) COMMENT 'User Picture'
+  picture VARCHAR(255) COMMENT 'User Picture',
+  cover_img VARCHAR(1000) COMMENT 'User Cover Image'
+
 ) default charset utf8mb4 COMMENT '';
 
 CREATE TABLE keeps (
@@ -48,7 +50,7 @@ CREATE TABLE vault_keeps(
 
 );
 
-DROP TABLE vault_keeps
+DROP TABLE accounts;
 
     SELECT vault_keeps.*, keeps.*, accounts.* FROM vault_keeps
     INNER JOIN keeps ON keeps.id = vault_keeps.keep_id

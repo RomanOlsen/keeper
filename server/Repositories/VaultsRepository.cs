@@ -96,6 +96,21 @@ DELETE FROM vaults WHERE id = @vaultId LIMIT 1
     return vaults;
   }
 
+  internal List<Vault> GetMyVaults(string userInfoId)
+  {
+    string sql = @"
+        SELECT vaults.*, accounts.* FROM vaults
+        INNER JOIN accounts ON accounts.id = vaults.creator_id
+        WHERE vaults.creator_id = @userInfoId
+    ;";
+    List<Vault> vaults = _db.Query(sql, (Vault vault, Account account) =>
+    {
+      vault.Creator = account;
+      return vault;
+    }, new { userInfoId }).ToList();
+    return vaults;
+  }
+
   // internal List<KeepsInVault> GetKeepsInPrivateVault(int vaultId)
   // {
   //   string sql = @"

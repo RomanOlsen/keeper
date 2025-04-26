@@ -1,3 +1,4 @@
+
 namespace keeper.Repositories;
 
 public class AccountsRepository
@@ -48,6 +49,20 @@ public class AccountsRepository
   {
     string sql = "SELECT * FROM accounts WHERE id = @id";
     return _db.QueryFirstOrDefault<Profile>(sql, new { id });
+  }
+
+  internal Profile EditMyAccount(Profile updatedProfile)
+  {
+    string sql = @"
+            UPDATE accounts
+            SET 
+            name = @Name,
+            picture = @Picture,
+            cover_img = @CoverImg
+            WHERE id = @Id;";
+
+    _db.Execute(sql, updatedProfile);
+    return updatedProfile;
   }
 }
 

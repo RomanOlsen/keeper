@@ -43,4 +43,18 @@ public class AccountService
     return profile;
 
   }
+
+  internal Profile EditMyAccount(Profile profileData, Account userInfo) // yes, i see how redundant i made this. i am aware.
+  {
+
+
+    Account original = GetAccount(userInfo.Id);
+    original.Name = profileData.Name ?? profileData.Name;
+    original.Picture = profileData.Picture ?? profileData.Picture;
+    original.Picture = profileData.Picture ?? profileData.Picture;
+    original.CoverImg = profileData.CoverImg ?? profileData.CoverImg;
+
+    Profile profile = _repo.EditMyAccount(original);
+    return profile;
+  }
 }
