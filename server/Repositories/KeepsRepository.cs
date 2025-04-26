@@ -1,8 +1,3 @@
-
-
-
-
-
 namespace keeper.Repositories;
 
 public class KeepsRepository
@@ -113,4 +108,23 @@ DELETE FROM keeps WHERE id = @keepId LIMIT 1
     return keeps;
   }
 
+  internal Keep UpdateViewCount(int keepId)
+  {
+    string sql = @"
+    UPDATE keeps
+    SET
+    views = views + 1
+    WHERE id = @keepId
+    LIMIT 1;
+
+    SELECT keeps.*, accounts.* FROM keeps
+        INNER JOIN accounts ON accounts.id = keeps.creator_id
+        WHERE keeps.id = @keepId
+    ;";
+
+    // return _db.Query(sql, new { keepId }).SingleOrDefault();
+
+    Keep keep = _db.Query(sql, (Keep keep, Account account) => { keep.Creator = account; return keep; }, new { keepId }).SingleOrDefault();
+    return keep;
+  }
 }

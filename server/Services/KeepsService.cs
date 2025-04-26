@@ -68,4 +68,9 @@ public class KeepsService
     List<Keep> keep = _repository.GetAUsersKeeps(profileId);
     return keep;
   }
+
+  internal Keep UpdateViewCount(int keepId)
+  {
+    return _repository.UpdateViewCount(keepId);
+  }
 }
