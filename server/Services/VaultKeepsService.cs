@@ -7,14 +7,22 @@ namespace keeper.Services;
 public class VaultKeepsService
 {
   private readonly VaultKeepsRepository _repository;
+  // private readonly VaultsService _vaultsService;
   public VaultKeepsService(VaultKeepsRepository repository)
   {
     _repository = repository;
+    // _vaultsService = vaultsService;
   }
+
 
   internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData, Account userInfo)
   {
+    
     VaultKeep vaultKeep = _repository.CreateVaultKeep(vaultKeepData);
+    // if (vaultKeep.CreatorId != userInfo.Id)
+    // {
+    //   throw new Exception("No. You cant make a vaultKeep on someone elses vault!");
+    // }
     return vaultKeep;
   }
 

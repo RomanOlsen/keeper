@@ -1,3 +1,4 @@
+
 namespace keeper.Controllers;
 
 [ApiController]
@@ -7,12 +8,14 @@ public class ProfilesController : ControllerBase
   private readonly AccountService _accountService;
   private readonly KeepsService _keepsService;
   private readonly VaultsService _vaultsService;
+  private readonly Auth0Provider _auth0Provider;
 
-  public ProfilesController(AccountService accountService, KeepsService keepsService, VaultsService vaultsService)
+  public ProfilesController(AccountService accountService, KeepsService keepsService, VaultsService vaultsService, Auth0Provider auth0Provider)
   {
     _accountService = accountService;
     _keepsService = keepsService;
     _vaultsService = vaultsService;
+    _auth0Provider = auth0Provider;
   }
 
   [HttpGet("{profileId}")]
@@ -44,11 +47,12 @@ public class ProfilesController : ControllerBase
   }
 
   [HttpGet("{profileId}/vaults")]
-  public ActionResult<List<Vault>> GetAUsersVaults(string profileId)
+  public async Task<ActionResult<List<Vault>>> GetAUsersVaultsAsync(string profileId)
   {
     try
     {
-      List<Vault> vaults = _vaultsService.GetAUsersVaults(profileId);
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext); // could be null
+      List<Vault> vaults = _vaultsService.GetAUsersVaults(profileId, userInfo);
       return Ok(vaults);
     }
     catch (Exception exception)

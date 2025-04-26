@@ -6,6 +6,9 @@ public class VaultsService
   private readonly VaultKeepsService _vaultKeepsService;
   private readonly Auth0Provider _auth0Provider;
 
+
+
+
   public VaultsService(VaultsRepository repository, VaultKeepsService vaultKeepsService, Auth0Provider auth0Provider)
   {
     _repository = repository;
@@ -93,10 +96,10 @@ public class VaultsService
     return keepsInPublicVault;
   }
 
-  internal List<Vault> GetAUsersVaults(string profileId)
+  internal List<Vault> GetAUsersVaults(string profileId, Account userInfo)
   {
     List<Vault> vaults = _repository.GetAUsersVaults(profileId);
-    return vaults;
+    return vaults.FindAll(vault => vault.IsPrivate == false || vault.CreatorId == userInfo?.Id);  // lecture reference
   }
 
   internal List<Vault> GetMyVaults(string UserInfoId) // basically get vaults for an account id
