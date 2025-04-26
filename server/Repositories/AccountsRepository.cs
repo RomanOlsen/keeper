@@ -43,5 +43,11 @@ public class AccountsRepository
     _db.Execute(sql, update);
     return update;
   }
+
+  internal Profile GetProfileById(string id)
+  {
+    string sql = "SELECT * FROM accounts WHERE id = @id";
+    return _db.QueryFirstOrDefault<Profile>(sql, new { id });
+  }
 }
 

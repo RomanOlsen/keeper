@@ -62,4 +62,9 @@ public class KeepsService
 
 
   }
+
+  internal Keep GetAUsersKeeps(string profileId)
+  {
+    throw new NotImplementedException();
+  }
 }
