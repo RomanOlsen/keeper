@@ -26,6 +26,18 @@ WHERE vault_keeps.id = LAST_INSERT_ID()
 
     ;";
 
+    //     INSERT INTO vault_keeps
+    // (keep_id, vault_id, creator_id)
+    // VALUES (@KeepId, @VaultId, @CreatorId);
+
+    // SELECT
+    // vault_keeps.*,
+    // COUNT(keep_id) AS kept
+    // FROM vault_keeps
+    // LEFT OUTER JOIN keeps ON keeps.id = vault_keeps.keep_id
+    // WHERE vault_keeps.id = LAST_INSERT_ID()
+    // GROUP BY vault_keeps.id, vault_keeps.keep_id, vault_keeps.vault_id, vault_keeps.creator_id
+
     VaultKeep vaultKeep = _db.Query<VaultKeep>(sql, vaultKeepData).SingleOrDefault(); // no need to have the extra function to populate a creator
     return vaultKeep;
   }
