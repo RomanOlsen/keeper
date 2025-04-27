@@ -25,9 +25,11 @@ defineProps({
   border: none;
   background-size: cover;
   // background-repeat: no-repeat;
+  // background:local;
   background-position: center;
-  // width: 100%;
-  // min-height: 10dvh;
+  width: 100%;
+  min-height: 10dvh;
+  margin: 1rem;
   // display: inline;
   // flex-grow: 1;
   // size:0cap;
