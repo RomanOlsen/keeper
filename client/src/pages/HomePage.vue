@@ -1,6 +1,7 @@
 <script setup>
 import { AppState } from '@/AppState.js';
 import KeepCard from '@/components/KeepCard.vue';
+import KeepDetailsModal from '@/components/KeepDetailsModal.vue';
 import { keepsService } from '@/services/KeepsService.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
@@ -39,6 +40,7 @@ async function getAllKeeps() {
       <!-- </div> -->
     </div>
   </div>
+  <KeepDetailsModal/>
 </template>
 
 <style scoped lang="scss">

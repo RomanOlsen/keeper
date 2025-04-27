@@ -17,7 +17,7 @@ watch(theme, () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-md bg-codeworks border-bottom border-vue">
+  <nav class="navbar navbar-expand-md bg-keeper border-bottom border-keeper-dark shadow">
     <div class="container gap-2">
       <RouterLink :to="{ name: 'Home' }" class="d-flex align-items-center text-light">
         <img class="navbar-brand" alt="logo" src="@/assets/img/keeper-logo.png" height="45" />
@@ -32,7 +32,7 @@ watch(theme, () => {
       <div class="collapse navbar-collapse " id="navbar-links">
         <ul class="navbar-nav">
           <li>
-            <RouterLink :to="{ name: 'About' }" class="btn text-green selectable">
+            <RouterLink :to="{ name: 'About' }" class="btn text-light selectable">
               About
             </RouterLink>
           </li>
@@ -61,7 +61,7 @@ a {
 }
 
 .navbar-nav .router-link-exact-active {
-  border-bottom: 2px solid var(--bs-success);
+  border-bottom: 2px solid var(--bs-keeper-light);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }

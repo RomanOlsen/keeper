@@ -5,14 +5,14 @@ import { RouterView } from 'vue-router';
 </script>
 
 <template>
-  <header>
+  <header class="custom-font">
     <Navbar />
   </header>
-  <main>
+  <main class="custom-font">
     <RouterView/>
   </main>
   <footer class=" text-center">
-    Made with <i class="mdi mdi-heart text-pink"></i> by CodeWorks
+
   </footer>
 </template>
 

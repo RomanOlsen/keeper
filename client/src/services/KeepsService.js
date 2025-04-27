@@ -4,6 +4,13 @@ import { Keep } from "@/models/Keep.js"
 import { AppState } from "@/AppState.js"
 
 class KeepsService{
+
+  async getKeepById(keepId) {
+    const response = await api.get(`api/keeps/${keepId}`)
+    logger.log(response.data)
+    const keep = new Keep(response.data)
+    AppState.activeKeep = keep
+  }
   async getAllKeeps() {
     const response = await api.get('api/keeps')
     logger.log(response.data)
