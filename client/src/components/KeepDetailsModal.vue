@@ -1,8 +1,26 @@
 <script setup>
 import { AppState } from '@/AppState.js';
-import { computed } from 'vue';
+import { Pop } from '@/utils/Pop.js';
+import { computed, ref } from 'vue';
 
 const keep = computed(() => AppState.activeKeep)
+const account = computed(() => AppState.account)
+const vaults = computed(()=> AppState.activeVaults)
+
+const formData = ref({
+  body: '',
+  imgUrl: '',
+})
+
+async function createVaultKeep() {
+try {
+  await 
+}
+catch (error){
+  Pop.error(error);
+}
+}
+
 </script>
 
 
@@ -15,12 +33,14 @@ const keep = computed(() => AppState.activeKeep)
           <div class="row">
             <div class="col-12 col-md-6 p-0">
               <img :src="keep.img" alt="" class="img-fluid image rounded-start">
+              <!-- NOTE rounded-start looks good on PC but bad mobile. -->
             </div>
             <div class="col-12 col-md-6">
-              <!-- <div class="d-flex justify-content-end align-items-center">
-              <button type="button" class="btn-close pe-4 mb-3" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div> -->
-              <div class="d-flex justify-content-center align-items-center fs-4 pt-5">
+
+              <button type="button" class="btn-close close-button mt-2" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+
+              <div class="d-flex justify-content-center align-items-center fs-4 m-3">
                 <div>
                   <span class="mdi mdi-eye"> {{ keep.views }}</span>
                 </div>
@@ -32,14 +52,32 @@ const keep = computed(() => AppState.activeKeep)
                 <div class="fs-1 fw-bold"> {{ keep.name }} </div>
                 <p>{{ keep.description }}</p>
               </div>
-              <div class="d-flex justify-content-between">
-                <h2 class="fs-5">By {{ keep.creator.name }}</h2>
-                <!-- <div v-if="keep.creatorId == account.id" class="me-2">
+
+              <div class="d-flex align-items-center flex-grow-1 justify-content-between">
+                <div v-if="account">
+                  <form @submit.prevent="createVaultKeep()">
+                    <select name="" id="">
+                      <option v-for="vault in vaults" :key="vault.id" value="">{{ vault.name}}</option>
+                    </select>
+                    <button type="submit" class="btn btn-keeper text-light">Save to Vault</button>
+                  </form>
+                </div>
+                <div v-else>
+                  <!-- giving it space for justify-content-between to work how we want -->
+                </div>
+
+                <div>
+                  <img class="image-fluid pfp" :src="keep.creator.picture" :alt="keep.creator.name + `'s picture`"
+                    :title="keep.creator.name + `'s picture`">
+                  <span>{{ keep.creator.name }}</span>
+                </div>
+              </div>
+              <!-- <div v-if="keep.creatorId == account.id" class="me-2">
 
                 <button @click="deleteRecipe()" class="btn btn-outline-danger" data-bs-dismiss="modal">Delete Recipe</button>
                 <button @click="editRecipe()" class="btn btn-outline-primary mx-1">Edit Recipe</button>
               </div> -->
-              </div>
+
               <!-- <span class="recipe-category-bg rounded-pill px-3 text-light">{{ recipe.category }}</span>
             <hr class="me-4">
             <h3 class="my-2 fs-3">Ingredients</h3> -->
@@ -85,4 +123,21 @@ const keep = computed(() => AppState.activeKeep)
   max-height: 70dvh; // 80-90dvh ish. keep it low for mobile users.
   object-fit: cover;
 }
-</style>
+
+.close-button {
+  position: absolute;
+  top: 0;
+  right: 1%;
+
+}
+
+.pfp {
+  height: 3rem;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+
+}
+
+// .modal-dialog{
+//   max-height: 70dvh;
+// }</style>
