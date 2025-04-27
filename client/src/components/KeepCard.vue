@@ -9,13 +9,13 @@ defineProps({
 
 
 <template>
-  <div class="card mt-5" :style="{ backgroundImage: `url(${keep.img})` }">
-    <div class="card-header">{{ keep.name }}</div>
-    <div class="card-body">
-      <img :src="keep.img" class="img-fluid hide">
+  <div class="card m-4" :style="{ backgroundImage: `url(${keep.img})` }">
+
+{{ keep.name }}
+      <img :src="keep.img" class="img-fluid hide" alt="Image">
       <!-- Image is now just there to determine size of the whole card -->
-    </div>
-    <div class="card-footer"></div>
+
+
   </div>
 
 </template>
@@ -25,6 +25,7 @@ defineProps({
 .card {
   border: none;
   background-size: cover;
+  // display: inline-block;
   // background-repeat: no-repeat;
   // background:local;
   background-position: center;
