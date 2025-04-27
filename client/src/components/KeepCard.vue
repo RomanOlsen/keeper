@@ -9,14 +9,17 @@ defineProps({
 
 
 <template>
-  <div class="card m-4" :style="{ backgroundImage: `url(${keep.img})` }">
+  <div class="card my-2" :style="{ backgroundImage: `url(${keep.img})` }">
 
-{{ keep.name }}
+    <div class="fs-3 fw-bold text-light custom-font t-shadow">
+      {{ keep.name }}
+    </div>
+    <img :src="keep.creator.picture" alt="img-fluid" :title="keep.creator.name">
       <img :src="keep.img" class="img-fluid hide" alt="Image">
       <!-- Image is now just there to determine size of the whole card -->
 
 
-  </div>
+  </div> 
 
 </template>
 
@@ -25,7 +28,7 @@ defineProps({
 .card {
   border: none;
   background-size: cover;
-  // display: inline-block;
+  display: inline-block;
   // background-repeat: no-repeat;
   // background:local;
   background-position: center;
@@ -41,5 +44,9 @@ defineProps({
 }
 .hide{
   opacity: 0;
+}
+
+.t-shadow{
+  text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
 }
 </style>
