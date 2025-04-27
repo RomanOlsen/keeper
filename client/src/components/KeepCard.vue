@@ -9,19 +9,20 @@ defineProps({
 
 
 <template>
-  <div class="keep" :style="{ backgroundImage: `url(${keep.img})` }">
+  <div class="card mt-5" :style="{ backgroundImage: `url(${keep.img})` }">
     <div class="card-header">{{ keep.name }}</div>
-    <!-- <div class="card-body"> -->
-      <!-- <img :src="keep.img" class="img-fluid"> -->
-    <!-- </div> -->
-    <!-- <div class="card-footer"></div> -->
+    <div class="card-body">
+      <img :src="keep.img" class="img-fluid hide">
+      <!-- Image is now just there to determine size of the whole card -->
+    </div>
+    <div class="card-footer"></div>
   </div>
 
 </template>
 
 
 <style lang="scss" scoped>
-.keep {
+.card {
   border: none;
   background-size: cover;
   // background-repeat: no-repeat;
@@ -29,7 +30,6 @@ defineProps({
   background-position: center;
   width: 100%;
   min-height: 10dvh;
-  margin: 1rem;
   // display: inline;
   // flex-grow: 1;
   // size:0cap;
@@ -37,5 +37,8 @@ defineProps({
   // min-height: 30dvh;
 
   // aspect-ratio: 1/1;
+}
+.hide{
+  opacity: 0;
 }
 </style>

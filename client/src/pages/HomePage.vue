@@ -29,7 +29,7 @@ async function getAllKeeps() {
 
         <div class="masonry-roman"> -->
           <!-- col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 -->
-          <div v-for="keep in keeps" :key="keep.id" class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4">
+          <div v-for="keep in keeps" :key="keep.id" class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 masonry-roman">
             <KeepCard :keep="keep" />
           </div>
         <!-- </div> -->
@@ -39,10 +39,10 @@ async function getAllKeeps() {
 </template>
 
 <style scoped lang="scss">
-// .masonry-roman {
-//   display: flex;
-//   flex-flow: row wrap;
-//   // align-items: flex-end;
-//   justify-content: center;
-// }
+.masonry-roman {
+  // display: flex;
+  // flex-flow: column-reverse;
+  // align-items: flex-end;
+  justify-content: center;
+}
 </style>
