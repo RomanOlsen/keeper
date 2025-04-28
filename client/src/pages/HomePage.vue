@@ -59,6 +59,6 @@ async function getAllKeeps() {
 
 .masonry-cols{
   // column-count: 2;
-  columns: 220px;
+  columns: 150px;
 }
 </style>

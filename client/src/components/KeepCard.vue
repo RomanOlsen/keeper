@@ -8,12 +8,12 @@ defineProps({
 })
 
 async function getKeepById(keepId) {
-try {
-  await keepsService.getKeepById(keepId);
-}
-catch (error){
-  Pop.error(error, "could not get keep by id");
-}
+  try {
+    await keepsService.getKeepById(keepId);
+  }
+  catch (error) {
+    Pop.error(error, "could not get keep by id");
+  }
 }
 
 </script>
@@ -24,10 +24,12 @@ catch (error){
   <div @click="getKeepById(keep.id)" class="card my-2" :style="{ backgroundImage: `url(${keep.img})` }"
     data-bs-toggle="modal" data-bs-target="#KeepDetailsModal" role="button">
 
-    <div class="keep-title fs-3 fw-bold text-light custom-font t-shadow mb-1">
+
+    <div class="keep-title fs-5 fw-bold text-light custom-font t-shadow mb-1">
       {{ keep.name }}
     </div>
     <img class="keep-creator-img mb-2 me-2" :src="keep.creator.picture" alt="" :title="keep.creator.name">
+
     <img :src="keep.img" class="img-fluid hide" alt="Image">
     <!-- Image is now just there to determine size of the whole card -->
 
@@ -70,6 +72,11 @@ catch (error){
   position: absolute;
   bottom: 0;
   padding-left: 0.5rem;
+  width: 8ch; // NOTE ch is CHARACTERS
+  word-break: normal;
+  z-index: 2;
+
+
 }
 
 .keep-creator-img {
