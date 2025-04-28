@@ -88,5 +88,6 @@ img {
 .account-view {
   background-size: cover;
   background-position: center;
+  background-color: #2e4d08;
 }
 </style>
