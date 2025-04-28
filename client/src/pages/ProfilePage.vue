@@ -7,7 +7,7 @@ import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const profile = computed(() => AppState.activeProfile)
-const keeps = computed(() => AppState.activeKeeps)
+const keeps = computed(() => AppState.keeps)
 const vaults = computed(() => AppState.activeVaults)
 
 

@@ -16,7 +16,7 @@ class ProfilesService{
     const response = await api.get(`api/profiles/${id}/keeps`)
     logger.log(response.data)
     const keeps = response.data.map(pojo => new Keep(pojo))
-    AppState.activeKeeps = keeps
+    AppState.keeps = keeps
   }
   async getAUsersVaults(id) {
     const response = await api.get(`api/profiles/${id}/vaults`)

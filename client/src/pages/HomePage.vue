@@ -29,18 +29,18 @@ async function getAllKeeps() {
       <!-- <div class="col-6">
 
         <div class="masonry-roman"> -->
-          <div class="masonry-cols mt-3">
-            <div v-for="keep in keeps" :key="keep.id">
-              <KeepCard :keep="keep" />
-            </div>
+      <div class="masonry-cols mt-3">
+        <div v-for="keep in keeps" :key="keep.id">
+          <KeepCard :keep="keep" />
+        </div>
 
-          </div>
-          <!-- col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 -->
-        <!-- </div> -->
+      </div>
+      <!-- col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4 -->
+      <!-- </div> -->
       <!-- </div> -->
     </div>
   </div>
-  <KeepDetailsModal/>
+  <KeepDetailsModal />
 </template>
 
 <style scoped lang="scss">
@@ -50,6 +50,7 @@ async function getAllKeeps() {
   // align-items: flex-end;
   justify-content: center;
 }
+
 // .grid {
 //    display: grid;
 //    grid-gap: 10px;
@@ -57,7 +58,7 @@ async function getAllKeeps() {
 //    grid-auto-rows: 200px;
 // }
 
-.masonry-cols{
+.masonry-cols {
   // column-count: 2;
   columns: 150px;
 }
