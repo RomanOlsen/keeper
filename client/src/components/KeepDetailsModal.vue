@@ -1,24 +1,29 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { vaultKeepsService } from '@/services/VaultKeepsService.js';
+import { vaultsService } from '@/services/VaultsService.js';
+import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, ref } from 'vue';
 
 const keep = computed(() => AppState.activeKeep)
 const account = computed(() => AppState.account)
-const vaults = computed(()=> AppState.activeVaults)
+const vaults = computed(() => AppState.activeVaults)
 
 const formData = ref({
-  body: '',
-  imgUrl: '',
+  vaultId: ''
 })
 
 async function createVaultKeep() {
-try {
-  await 
-}
-catch (error){
-  Pop.error(error);
-}
+  try {
+    // const vaultKeepData = event.target
+    await vaultKeepsService.createVaultKeep(formData.value.vaultId, keep.value.id);
+    Pop.success("Keep added to vault!")
+  }
+  catch (error) {
+    Pop.error(error);
+    logger.log("couldnt create a VK", error)
+  }
 }
 
 </script>
@@ -56,10 +61,10 @@ catch (error){
               <div class="d-flex align-items-center flex-grow-1 justify-content-between">
                 <div v-if="account">
                   <form @submit.prevent="createVaultKeep()">
-                    <select name="" id="">
-                      <option v-for="vault in vaults" :key="vault.id" value="">{{ vault.name}}</option>
+                    <select v-model="formData.vaultId" title="Choose a vault to save this to" required>
+                      <option v-for="vault in vaults" :key="vault.id" :value="vault.id">{{ vault.name }}</option>
                     </select>
-                    <button type="submit" class="btn btn-keeper text-light">Save to Vault</button>
+                    <button data-bs-dismiss="modal" type="submit" class="btn btn-keeper text-light">Save to Vault</button>
                   </form>
                 </div>
                 <div v-else>
