@@ -39,8 +39,10 @@ async function getAUsersProfileInfo(id) {
     <div class="row">
       <div class="col-12 d-flex justify-content-center pt-2">
         <div class="position-relative">
+          <div class="image">
 
-          <img v-if="profile.coverImg" class="image rounded" :src="profile.coverImg" alt="">
+            <img class="image rounded" :src="profile.coverImg" alt="Cover Image Goes Here">
+          </div>
           <div class="">
             <img class="pfp" :src="profile.picture" alt="">
           </div>
@@ -60,8 +62,15 @@ async function getAUsersProfileInfo(id) {
 
 
             <div v-for="vault in vaults" :key="vault.id" class="col-2 pb-3">
-              <img class="vault-image rounded" :src="vault.img" alt="vault img">
-              <div>{{ vault.name }}</div>
+              <div class="position-relative">
+                <img class="vault-image rounded" :src="vault.img" alt="vault img">
+                <div  v-if="vault.isPrivate" class="mdi mdi-lock lock p-1"></div>
+                <div  v-else class="mdi mdi-earth lock p-1"></div>
+
+                <div class="title p-1">{{ vault.name }}</div>
+
+              </div>
+              
             </div>
 
           </div>
@@ -74,9 +83,14 @@ async function getAUsersProfileInfo(id) {
 
 
             <div v-for="keep in keeps" :key="keep.id" class="col-2 pb-3">
-              <img class="vault-image rounded" :src="keep.img" alt="keep img">
-              <div>{{ keep.name }}</div>
+              <div class="position-relative">
+                <img class="vault-image rounded" :src="keep.img" alt="keep img">
 
+
+                <div class="title p-1">{{ keep.name }}</div>
+
+              </div>
+              
             </div>
           </div>
         </div>
@@ -114,5 +128,22 @@ async function getAUsersProfileInfo(id) {
 
 .vault-image {
   width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.title{
+  position: absolute;
+bottom: 0;
+color: white;
+text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
+
+}
+.lock{
+  position: absolute;
+bottom: 0;
+right: 0;
+color: white;
+text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
+
 }
 </style>

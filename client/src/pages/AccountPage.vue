@@ -1,12 +1,18 @@
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { Pop } from '@/utils/Pop.js';
 import { logger } from '@/utils/Logger.js';
 import { accountService } from '@/services/AccountService.js';
+import { profilesService } from '@/services/ProfilesService.js';
 
 const account = computed(() => AppState.account)
-// const accountFormInputs = AppState.account;
+const keeps = computed(() => AppState.keeps)
+const vaults = computed(() => AppState.activeVaults)
+
+onMounted(() => {
+  getInfoToCalculateLength()
+})
 
 const accountFormData = ref({
   name: '',
@@ -23,17 +29,29 @@ async function editMyAccount() {
   }
 
 }
+
+async function getInfoToCalculateLength() {
+  try {
+    await profilesService.getAUsersKeeps(account.value.id)
+    await accountService.getMyVaults()
+  }
+  catch (error) {
+    Pop.error(error);
+  }
+}
 </script>
 
 <template>
   <div class="about text-center">
     <div v-if="account">
-      <div class="container text-light t-shadow account-view rounded mt-3" :style="{ backgroundImage: `url(${account.coverImg})` }">
+      <div class="container text-light t-shadow account-view rounded mt-3"
+        :style="{ backgroundImage: `url(${account.coverImg})` }">
 
         <h1>Welcome {{ account.name }}</h1>
         <img class="rounded" :src="account.picture" alt="" />
         <p>{{ account.email }}</p>
-
+        <span>{{ vaults.length }} Vaults | {{ keeps.length }} Keeps</span>
+        
       </div>
       <div class="container">
         <div class="row justify-content-center">
@@ -44,7 +62,7 @@ async function editMyAccount() {
                 <form @submit.prevent="editMyAccount()">
                   <li class="list-group-item">
                     <div for="name">Name </div>
-                    <input v-model="accountFormData.name" name="name" type="text"  maxlength="255"
+                    <input v-model="accountFormData.name" name="name" type="text" maxlength="255"
                       placeholder="Keep same name">
                   </li>
                   <li class="list-group-item">
@@ -66,6 +84,7 @@ async function editMyAccount() {
 
 
             </div>
+           
           </div>
         </div>
       </div>
