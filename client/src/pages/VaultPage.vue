@@ -24,7 +24,7 @@ async function getVaultById(id) {
     await vaultKeepsService.getKeepsInVault(id)
   }
   catch (error) {
-    Pop.error(error, "Could not get vault info");
+    Pop.error(error, "Could not get vault info. It may be Private.");
     logger.error("Could not get vault info", error)
     router.push({ name: 'Home' })
   }
@@ -74,7 +74,7 @@ async function deleteKeepFromVault(vaultKeepId) {
 
               <div class="position-relative">
                 <img class="vault-image rounded" :src="keep.img" alt="vault img">
-                <button v-if="keep.creatorId == account?.id" @click="deleteKeepFromVault(keep.vaultKeepId)"
+                <button v-if="keep.creator.id == account?.id" @click="deleteKeepFromVault(keep.vaultKeepId)"
                   class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
                 <img :src="keep.creator.picture" class="keepIcon p-1">
                 <div class="title p-1">{{ keep.name }}</div>

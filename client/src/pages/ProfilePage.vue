@@ -102,7 +102,7 @@ async function deleteKeep(id) {
                   
                 </div>
               </RouterLink>
-              <button v-if="profile.id == account.id" @click="deleteVault(vault.id)"
+              <button v-if="profile.id == account?.id" @click="deleteVault(vault.id)"
                 class="btn btn-danger p-0 mdi mdi-delete">Delete</button>
 
             </div>
@@ -120,7 +120,7 @@ async function deleteKeep(id) {
 
               <div class="position-relative">
                 <img class="vault-image rounded" :src="keep.img" alt="keep img">
-                <button v-if="profile.id == account.id" @click="deleteKeep(keep.id)"
+                <button v-if="profile.id == account?.id" @click="deleteKeep(keep.id)"
                   class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
 
                 <div class="title p-1">{{ keep.name }}</div>

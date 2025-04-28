@@ -55,7 +55,7 @@ async function getInfoToCalculateLength() {
       </div>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-12 col-md-6 col-xl-4">
+          <div class="col-12 col-md-6 col-xl-4 pt-2">
             <div class="card">
               <div class="card-header">Edit Account Details</div>
               <ul class="list-group list-group-flush">

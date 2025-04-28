@@ -25,6 +25,7 @@ async function createKeep() {
   try {
     await keepsService.createKeep(keepFormData)
     Pop.success("Keep has been created!")
+    // location.reload()
   }
   catch (error) {
     Pop.error(error);
@@ -35,7 +36,7 @@ async function createVault() {
   try {
     await vaultsService.createVault(vaultFormData)
     Pop.success("Vault has been created!")
-
+    // location.reload()
   }
   catch (error) {
     Pop.error(error);
@@ -111,7 +112,7 @@ async function createVault() {
           <div class="modal-footer justify-content-between">
             <div>
               <span class="fs-5 pe-2">Mark Private?</span>
-              <input v-model="vaultFormData.isPrivate" class="checkbox" type="checkbox">  
+              <input v-model="vaultFormData.isPrivate" class="checkbox" type="checkbox">
               <div>Private vaults can only be seen by you.</div>
             </div>
             <button class="btn btn-keeper text-light" type="submit" data-bs-dismiss="modal">Create</button>
@@ -127,7 +128,8 @@ async function createVault() {
 input {
   width: 75%;
 }
-.checkbox{
+
+.checkbox {
   width: unset;
 }
 </style>
