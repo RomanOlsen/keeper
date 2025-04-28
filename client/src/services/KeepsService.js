@@ -5,6 +5,12 @@ import { AppState } from "@/AppState.js"
 import { accountService } from "./AccountService.js"
 
 class KeepsService{
+  async deleteKeep(id) {
+    const response = await api.delete(`api/keeps/${id}`)
+    logger.log(response.data)
+    const index = AppState.keeps.findIndex(keep => keep.id == id)
+    AppState.keeps.splice(index, 1)
+  }
   
   async getKeepById(keepId) {
     const response = await api.get(`api/keeps/${keepId}`)

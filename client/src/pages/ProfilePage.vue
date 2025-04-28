@@ -1,6 +1,8 @@
 <script setup>
 import { AppState } from '@/AppState.js';
+import { keepsService } from '@/services/KeepsService.js';
 import { profilesService } from '@/services/ProfilesService.js';
+import { vaultsService } from '@/services/VaultsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
 import { computed, onMounted } from 'vue';
@@ -28,6 +30,32 @@ async function getAUsersProfileInfo(id) {
     Pop.error(error, "Could not get users profile information");
     logger.error("Could not get profile info", error)
   }
+}
+
+async function deleteVault(id) {
+  try {
+    const confirm = await Pop.confirm("Are you sure you want to delete this vault?")
+    if (!confirm) {
+      return
+    }
+    await vaultsService.deleteVault(id)
+  }
+  catch (error){
+    Pop.error(error);
+  }
+}
+async function deleteKeep(id) {
+try {
+  const confirm = await Pop.confirm("Are you sure you want to delete this keep?")
+    if (!confirm) {
+      return
+    }
+  await keepsService.deleteKeep(id)
+
+}
+catch (error){
+  Pop.error(error);
+}
 }
 
 
@@ -61,16 +89,17 @@ async function getAUsersProfileInfo(id) {
           <div class="row">
 
 
-            <div v-for="vault in vaults" :key="vault.id" class="col-2 pb-3">
+            <div v-for="vault in vaults" :key="vault.id" class="col-6 col-md-4 col-lg-2 pb-3">
               <div class="position-relative">
                 <img class="vault-image rounded" :src="vault.img" alt="vault img">
-                <div  v-if="vault.isPrivate" class="mdi mdi-lock lock p-1"></div>
-                <div  v-else class="mdi mdi-earth lock p-1"></div>
+                <button @click="deleteVault(vault.id)" class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
+                <div v-if="vault.isPrivate" class="mdi mdi-lock lock p-1"></div>
+                <div v-else class="mdi mdi-earth lock p-1"></div>
 
                 <div class="title p-1">{{ vault.name }}</div>
 
               </div>
-              
+
             </div>
 
           </div>
@@ -82,15 +111,15 @@ async function getAUsersProfileInfo(id) {
           <div class="row">
 
 
-            <div v-for="keep in keeps" :key="keep.id" class="col-2 pb-3">
+            <div v-for="keep in keeps" :key="keep.id" class="col-6 col-md-4 col-lg-2 pb-3">
               <div class="position-relative">
                 <img class="vault-image rounded" :src="keep.img" alt="keep img">
-
+                <button @click="deleteKeep(keep.id)" class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
 
                 <div class="title p-1">{{ keep.name }}</div>
 
               </div>
-              
+
             </div>
           </div>
         </div>
@@ -131,19 +160,30 @@ async function getAUsersProfileInfo(id) {
   aspect-ratio: 1/1;
   object-fit: cover;
 }
-.title{
+
+.title {
   position: absolute;
-bottom: 0;
-color: white;
-text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
+  bottom: 0;
+  color: white;
+  text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
 
 }
-.lock{
+
+.lock {
   position: absolute;
-bottom: 0;
-right: 0;
-color: white;
-text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
+  bottom: 0;
+  right: 0;
+  color: white;
+  text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
+
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  text-shadow: 1px 1px 0.4rem rgb(0, 0, 0);
 
 }
 </style>
