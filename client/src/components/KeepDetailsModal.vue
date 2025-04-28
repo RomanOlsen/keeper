@@ -8,7 +8,7 @@ import { computed, ref } from 'vue';
 
 const keep = computed(() => AppState.activeKeep)
 const account = computed(() => AppState.account)
-const vaults = computed(() => AppState.activeVaults)
+const vaults = computed(() => AppState.vaults)
 
 const formData = ref({
   vaultId: ''

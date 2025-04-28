@@ -9,8 +9,9 @@ import { computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
 const profile = computed(() => AppState.activeProfile)
+const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
-const vaults = computed(() => AppState.activeVaults)
+const vaults = computed(() => AppState.vaults)
 
 
 const route = useRoute()
@@ -40,22 +41,22 @@ async function deleteVault(id) {
     }
     await vaultsService.deleteVault(id)
   }
-  catch (error){
+  catch (error) {
     Pop.error(error);
   }
 }
 async function deleteKeep(id) {
-try {
-  const confirm = await Pop.confirm("Are you sure you want to delete this keep?")
+  try {
+    const confirm = await Pop.confirm("Are you sure you want to delete this keep?")
     if (!confirm) {
       return
     }
-  await keepsService.deleteKeep(id)
+    await keepsService.deleteKeep(id)
 
-}
-catch (error){
-  Pop.error(error);
-}
+  }
+  catch (error) {
+    Pop.error(error);
+  }
 }
 
 
@@ -90,15 +91,19 @@ catch (error){
 
 
             <div v-for="vault in vaults" :key="vault.id" class="col-6 col-md-4 col-lg-2 pb-3">
-              <div class="position-relative">
-                <img class="vault-image rounded" :src="vault.img" alt="vault img">
-                <button @click="deleteVault(vault.id)" class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
-                <div v-if="vault.isPrivate" class="mdi mdi-lock lock p-1"></div>
-                <div v-else class="mdi mdi-earth lock p-1"></div>
-
-                <div class="title p-1">{{ vault.name }}</div>
-
-              </div>
+              <RouterLink :to="{ name: 'Vault Page', params: { id: vault.id } }">
+                
+                <div class="position-relative">
+                  <img class="vault-image rounded" :src="vault.img" alt="vault img">
+                  <div v-if="vault.isPrivate" class="mdi mdi-lock lock p-1"></div>
+                  <div v-else class="mdi mdi-earth lock p-1"></div>
+                  
+                  <div class="title p-1">{{ vault.name }}</div>
+                  
+                </div>
+              </RouterLink>
+              <button v-if="profile.id == account.id" @click="deleteVault(vault.id)"
+                class="btn btn-danger p-0 mdi mdi-delete">Delete</button>
 
             </div>
 
@@ -112,9 +117,11 @@ catch (error){
 
 
             <div v-for="keep in keeps" :key="keep.id" class="col-6 col-md-4 col-lg-2 pb-3">
+
               <div class="position-relative">
                 <img class="vault-image rounded" :src="keep.img" alt="keep img">
-                <button @click="deleteKeep(keep.id)" class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
+                <button v-if="profile.id == account.id" @click="deleteKeep(keep.id)"
+                  class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
 
                 <div class="title p-1">{{ keep.name }}</div>
 

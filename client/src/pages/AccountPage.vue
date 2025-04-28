@@ -8,7 +8,7 @@ import { profilesService } from '@/services/ProfilesService.js';
 
 const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
-const vaults = computed(() => AppState.activeVaults)
+const vaults = computed(() => AppState.vaults)
 
 onMounted(() => {
   getInfoToCalculateLength()

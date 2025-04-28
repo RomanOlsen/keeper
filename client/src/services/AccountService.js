@@ -41,7 +41,7 @@ let coverImg
     const response = await api.get('/account/vaults')
     logger.log(response.data);
     const vaults = response.data.map(pojo => new Vault(pojo))
-    AppState.activeVaults = vaults
+    AppState.vaults = vaults
   }
 }
 
