@@ -1,11 +1,15 @@
 <script setup>
 import { Keep } from '@/models/Keep.js';
 import { keepsService } from '@/services/KeepsService.js';
+import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
+import { ref } from 'vue';
 
-defineProps({
+const props = defineProps({
   keep: { type: Keep, required: true }
 })
+
+const showErrorImg = ref(false)
 
 async function getKeepById(keepId) {
   try {
@@ -14,6 +18,11 @@ async function getKeepById(keepId) {
   catch (error) {
     Pop.error(error, "could not get keep by id");
   }
+}
+
+function swapSource() {
+  logger.warn('Error loading image', props.keep.img)
+  showErrorImg.value = true
 }
 
 </script>
@@ -30,7 +39,11 @@ async function getKeepById(keepId) {
     </div>
     <img class="keep-creator-img mb-2 me-2" :src="keep.creator.picture" alt="" :title="keep.creator.name">
 
-    <img :src="keep.img" class="img-fluid hide" alt="Image">
+    <img v-if="!showErrorImg" @error="swapSource" :src="keep.img" class="img-fluid" alt="Image" height="500"
+      width="500">
+    <img v-else
+      src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D"
+      class="img-fluid" alt="">
     <!-- Image is now just there to determine size of the whole card -->
 
 
