@@ -24,7 +24,7 @@ async function editMyAccount() {
     await accountService.editMyAccount(accountFormData.value);
   }
   catch (error) {
-    Pop.error(error);
+    Pop.error(error, "Cant edit account");
     logger.log("could not update account", error)
   }
 
@@ -32,11 +32,16 @@ async function editMyAccount() {
 
 async function getInfoToCalculateLength() {
   try {
+    // TODO add account's keep and vault count on the backend for easy retrieval.
+    // if (!account.value) {
+    //   return
+    // }
     await profilesService.getAUsersKeeps(account.value.id)
     await accountService.getMyVaults()
   }
   catch (error) {
     Pop.error(error);
+    logger.error(error)
   }
 }
 </script>
@@ -48,10 +53,10 @@ async function getInfoToCalculateLength() {
         :style="{ backgroundImage: `url(${account.coverImg})` }">
 
         <h1>Welcome {{ account.name }}</h1>
-        <img class="rounded" :src="account.picture" alt="" />
+        <img class="rounded" :src="account.picture" alt="picture here" />
         <p>{{ account.email }}</p>
         <span>{{ vaults.length }} Vaults | {{ keeps.length }} Keeps</span>
-        
+
       </div>
       <div class="container">
         <div class="row justify-content-center">
@@ -84,7 +89,7 @@ async function getInfoToCalculateLength() {
 
 
             </div>
-           
+
           </div>
         </div>
       </div>
@@ -98,6 +103,8 @@ async function getInfoToCalculateLength() {
 <style scoped lang="scss">
 img {
   max-width: 100px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
 
 .t-shadow {

@@ -21,6 +21,8 @@ async function setModalMode(boolean) {
   modalsService.setModalMode(boolean)
 }
 
+
+
 </script>
 
 <template>

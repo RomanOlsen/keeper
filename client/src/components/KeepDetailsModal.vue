@@ -14,6 +14,13 @@ const formData = ref({
   vaultId: ''
 })
 
+// const showErrorImg = ref(false)
+
+// function swapSource() {
+//   logger.warn('Error loading image')
+//   showErrorImg.value = true
+// }
+
 async function createVaultKeep() {
   try {
     // const vaultKeepData = event.target
@@ -37,8 +44,13 @@ async function createVaultKeep() {
         <div class="container-fluid">
           <div class="row">
             <div class="col-12 col-md-6 p-0">
-              <img :src="keep.img" :alt="'Image of ' + keep.name + ' would be here but it is missing!'"
+              <img :src="keep.img"
+                :alt="'Image of ' + keep.name + ' would be here but it is missing!'"
                 class="img-fluid image rounded-start">
+              <!-- <img v-else
+                src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D"
+                :alt="'Image of ' + keep.name + ' would be here but it is missing!'"
+                class="img-fluid image rounded-start"> -->
               <!-- NOTE rounded-start looks good on PC but bad mobile. -->
             </div>
             <div class="col-12 col-md-6 d-flex flex-column">
@@ -76,6 +88,8 @@ async function createVaultKeep() {
                   <RouterLink :to="{ name: 'Profile Page', params: { id: keep.creatorId } }">
                     <img class="image-fluid pfp" :src="keep.creator.picture" :alt="keep.creator.name + `'s picture`"
                       :title="keep.creator.name + `'s picture`" data-bs-dismiss="modal">
+                    <!-- <img v-else class="image-fluid pfp" src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D" :alt="keep.creator.name + `'s picture`"
+                      :title="keep.creator.name + `'s picture`" data-bs-dismiss="modal"> -->
                     <span data-bs-dismiss="modal">{{ keep.creator.name }}</span>
                   </RouterLink>
                 </div>
@@ -146,7 +160,7 @@ async function createVaultKeep() {
   height: 3rem;
   border-radius: 50%;
   aspect-ratio: 1/1;
-
+  object-fit: cover;
 }
 
 // .modal-dialog{

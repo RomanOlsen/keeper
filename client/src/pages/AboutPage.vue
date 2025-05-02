@@ -13,10 +13,10 @@
       save keeps onto their own collections, known as vaults.</p>
     <p>About Roman: Roman is interested in software development and coding in general. He also really enjoys video
       editing, hiking, fitness, playing with his dog and more. </p>
-    <a href="https://www.linkedin.com/in/romanolsen1/">Linkedin</a>
+    <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/romanolsen1/">Linkedin</a>
     <div>
-    </div> 
-    <a href="https://github.com/RomanOlsen/">Github</a>
+    </div>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/RomanOlsen/">Github</a>
   </div>
 </template>
 

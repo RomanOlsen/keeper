@@ -37,7 +37,8 @@ function swapSource() {
     <div class="keep-title fs-5 fw-bold text-light custom-font t-shadow mb-1">
       {{ keep.name }}
     </div>
-    <img class="keep-creator-img mb-2 me-2" :src="keep.creator.picture" alt="" :title="keep.creator.name">
+    <img v-if="!showErrorImg" @error="swapSource" class="keep-creator-img mb-2 me-2" :src="keep.creator.picture" alt="" :title="keep.creator.name">
+    <img v-else class="keep-creator-img mb-2 me-2" src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D" alt="" :title="keep.creator.name">
 
     <img v-if="!showErrorImg" @error="swapSource" :src="keep.img" class="img-fluid" alt="Image" height="500"
       width="500">
@@ -100,5 +101,6 @@ function swapSource() {
   height: 2.5rem;
   aspect-ratio: 1/1;
   border-radius: 50%;
+  object-fit: cover;
 }
 </style>

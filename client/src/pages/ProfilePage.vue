@@ -5,7 +5,7 @@ import { profilesService } from '@/services/ProfilesService.js';
 import { vaultsService } from '@/services/VaultsService.js';
 import { logger } from '@/utils/Logger.js';
 import { Pop } from '@/utils/Pop.js';
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 const profile = computed(() => AppState.activeProfile)
@@ -13,6 +13,12 @@ const account = computed(() => AppState.account)
 const keeps = computed(() => AppState.keeps)
 const vaults = computed(() => AppState.vaults)
 
+const showErrorImg = ref(false)
+
+function swapSource() {
+  logger.warn('Error loading image')
+  showErrorImg.value = true
+}
 
 const route = useRoute()
 
@@ -70,10 +76,12 @@ async function deleteKeep(id) {
         <div class="position-relative">
           <div class="image">
 
-            <img class="image rounded" :src="profile.coverImg" alt="Cover Image Goes Here">
+            <img v-if="!showErrorImg" @error="swapSource" class="image rounded" :src="profile.coverImg" alt="Cover Image Goes Here">
+            <img v-else class="image rounded" src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D" alt="Cover Image Goes Here">
           </div>
           <div class="">
-            <img class="pfp" :src="profile.picture" alt="">
+            <img v-if="!showErrorImg" @error="swapSource" class="pfp" :src="profile.picture" alt="">
+            <img v-else class="pfp" src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D" alt="">
           </div>
         </div>
       </div>
@@ -92,14 +100,19 @@ async function deleteKeep(id) {
 
             <div v-for="vault in vaults" :key="vault.id" class="col-6 col-md-4 col-lg-2 pb-3">
               <RouterLink :to="{ name: 'Vault Page', params: { id: vault.id } }">
-                
+
                 <div class="position-relative">
-                  <img class="vault-image rounded" :src="vault.img" alt="vault img">
+                  <img v-if="!showErrorImg" @error="swapSource" class="vault-image rounded" :src="vault.img"
+                    alt="vault img">
+                  <img v-else class="vault-image rounded"
+                    src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D"
+                    alt="vault img">
+
                   <div v-if="vault.isPrivate" class="mdi mdi-lock lock p-1"></div>
                   <div v-else class="mdi mdi-earth lock p-1"></div>
-                  
+
                   <div class="title p-1">{{ vault.name }}</div>
-                  
+
                 </div>
               </RouterLink>
               <button v-if="profile.id == account?.id" @click="deleteVault(vault.id)"
@@ -119,7 +132,12 @@ async function deleteKeep(id) {
             <div v-for="keep in keeps" :key="keep.id" class="col-6 col-md-4 col-lg-2 pb-3">
 
               <div class="position-relative">
-                <img class="vault-image rounded" :src="keep.img" alt="keep img">
+                <img v-if="!showErrorImg" @error="swapSource" class="vault-image rounded" :src="keep.img"
+                  alt="keep img">
+                <img v-else class="vault-image rounded"
+                  src="https://images.unsplash.com/photo-1466477234737-8a3b3faed8c3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHBvbGFyJTIwYmVhcnxlbnwwfHwwfHx8MA%3D%3D"
+                  alt="keep img">
+
                 <button v-if="profile.id == account?.id" @click="deleteKeep(keep.id)"
                   class="btn btn-danger p-0 fs-5 mdi mdi-delete delete"></button>
 
@@ -154,6 +172,8 @@ async function deleteKeep(id) {
   border-width: thick;
   position: absolute;
   bottom: -12%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 
   left: 0;
   right: 0;

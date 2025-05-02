@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { AppState } from '../AppState.js';
 import { AuthService } from '../services/AuthService.js';
+import { logger } from '@/utils/Logger.js';
 
 const identity = computed(() => AppState.identity)
 const account = computed(() => AppState.account)
@@ -11,6 +12,13 @@ function login() {
 }
 function logout() {
   AuthService.logout()
+}
+
+const showErrorImg = ref(false)
+
+function swapSource() {
+  logger.warn(`Error account's image`)
+  showErrorImg.value = true
 }
 
 </script>
@@ -25,7 +33,9 @@ function logout() {
         <div role="button" class="selectable no-select" data-bs-toggle="dropdown" aria-expanded="false"
           title="open account menu">
           <div v-if="account?.picture || identity?.picture">
-            <img :src="account?.picture || identity?.picture" alt="account photo" height="40" class="user-img" />
+            <img v-if="!showErrorImg" @error="swapSource" :src="account?.picture || identity?.picture" alt="account photo" height="40" class="user-img" />
+            <img v-else :src="identity?.picture" alt="account photo" height="40" class="user-img" />
+
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-sm-end dropdown-menu-start p-0" role="menu" title="account menu">
